@@ -7,14 +7,16 @@ Narrative:
 
 Scenario: Test the "AssessmentApi" application
 
-Given I run the application
-And I open the navigator
-When I enter the "http://localhost:8080/HealthCheck" address
-Then I should see "UP and Running"
+Given I enter the <address> address
+When the application start
+Then I should see <message>
 
-Scenario: Test the "AssessmentApi" database application
+Scenario: Test the "AssessmentApi" application database
+Given I enter the <address> database adress
+When the database application start
+Then I should see database <message>
 
-Given I run the application
-And I open the navigator
-When I enter the "http://localhost:8080/HealthCheck/dataBase" address
-Then I should see "UP and Running DATA BASE"
+Examples:
+      | address                                      | message                      |
+      | "http://localhost:8080/HealthCheck"          | "UP and Running"             |
+      | "http://localhost:8080/HealthCheck/dataBase" | "UP and Running DATA BASE"   |
