@@ -23,25 +23,25 @@ public class ApplicationSteps {
     }
 
     private String address = "http://localhost:8080/HealthCheck";
-    private String message = "UP and Running";
-    private HttpUriRequest request;
 
     @Autowired
     RestTemplate restTemplate;
 
     @Given("I enter the $address address")
     public void enterTheAddress() {
-        request = new HttpGet(address);
+
         Assert.assertTrue(page.getTitle().contentEquals(address));
     }
 
     @When("the application start")
     public void theApplicationStarts() throws IOException {
+        HttpUriRequest request = new HttpGet(address);
         HttpClientBuilder.create().build().execute(request);
     }
 
     @Then("I should see $message")
     public void theCorrectMessageShouldAppear() {
+        String message = "UP and Running";
         Assert.assertTrue(page.getPageSource().contains(message));
     }
 }

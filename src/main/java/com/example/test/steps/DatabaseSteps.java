@@ -24,15 +24,14 @@ public class DatabaseSteps {
         page = new ApplicationPage(driver);
     }
 
-    private String address = "http://localhost:8080/HealthCheck/dataBase";
-    private String message = "UP and Running DATA BASE";
     private HttpUriRequest request;
 
     @Autowired
-    RestTemplate restTemplate;
+    RestTemplate restTemplatze;
 
     @Given("I enter the $address database adress")
     public void enterTheAddress() {
+        String address = "http://localhost:8080/HealthCheck/dataBase";
         request = new HttpGet(address);
         Assert.assertTrue(page.getTitle().contentEquals(address));
     }
@@ -42,8 +41,9 @@ public class DatabaseSteps {
         HttpClientBuilder.create().build().execute(request);
     }
 
-    @Then("I should see database $message")
+    @Then("I should now see $message")
     public void theCorrectMessageShouldAppear() {
+        String message = "UP and Running DATA BASE";
         Assert.assertTrue(page.getPageSource().contains(message));
     }
 }

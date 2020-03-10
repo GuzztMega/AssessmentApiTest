@@ -16,28 +16,28 @@ import java.net.URL;
 
 @SpringBootApplication
 public class AssessmentApiTestApplication{
+    public static void main(String[] args) {}
 
-    @Autowired
-    private RestTemplate restTemplate;
+        @Autowired
+        private RestTemplate restTemplate;
 
-    @Value(value="url")
-    private String url;
+        @Value(value = "url")
+        private String url;
 
+        public void run () throws MalformedURLException {
+            ResponseEntity<String> response = restTemplate
+                    .getForEntity(new URL("http://localhost:" + url + "/healthCheck").toString(), String.class);
 
-    public void run() throws MalformedURLException {
-        ResponseEntity<String> response = restTemplate
-                .getForEntity(new URL("http://localhost:" + url + "/healthCheck").toString(), String.class);
+            Assert.assertTrue(response.getStatusCode().equals(HttpStatus.OK));
 
-        Assert.assertTrue(response.getStatusCode().equals(HttpStatus.OK));
+            ResponseEntity<String> responseDb = restTemplate
+                    .getForEntity(new URL("http://localhost:" + url + "/healthCheck/dataBase").toString(), String.class);
+            Assert.assertTrue(responseDb.getStatusCode().equals(HttpStatus.OK));
+        }
 
-        ResponseEntity<String> responseDb = restTemplate
-                .getForEntity(new URL("http://localhost:" + url + "/healthCheck/dataBase").toString(), String.class);
-        Assert.assertTrue(responseDb.getStatusCode().equals(HttpStatus.OK));
-    }
-
-    @Bean
-    public RestTemplate getRestTemplate() {
-        return new RestTemplate();
-    }
+        @Bean
+        public RestTemplate getRestTemplate () {
+            return new RestTemplate();
+        }
 
 }
